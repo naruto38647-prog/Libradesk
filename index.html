@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#101b35">
+  <title>LibraDesk | Library Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section id="authPage" class="auth-page">
+  <div class="auth-brand"><span class="brand-icon">L</span><span>LibraDesk<small>YOUR DIGITAL LIBRARY</small></span></div>
+  <div class="auth-card">
+    <p class="eyebrow">LIBRARY MANAGEMENT PLATFORM</p>
+    <h1 id="authTitle">Welcome back</h1>
+    <p id="authSubtitle">Sign in to continue to your library.</p>
+    <div class="auth-tabs">
+      <button id="loginTab" class="tab active" type="button">Sign in</button>
+      <button id="signupTab" class="tab" type="button">Create account</button>
+    </div>
+    <form id="loginForm">
+      <label for="loginRole">Account type</label>
+      <select id="loginRole"><option value="member">Library member</option><option value="admin">Administrator</option></select>
+      <label for="loginEmail">Email or admin username</label>
+      <input id="loginEmail" required autocomplete="username" placeholder="Email or admin">
+      <label for="loginPassword">Password</label>
+      <input id="loginPassword" type="password" required autocomplete="current-password" placeholder="Password">
+      <button class="btn primary full" type="submit">Sign in →</button>
+      <p id="loginMessage" class="form-message" role="status"></p>
+    </form>
+    <form id="signupForm" hidden>
+      <label for="signupName">Full name</label><input id="signupName" required maxlength="100" autocomplete="name" placeholder="Your full name">
+      <label for="signupEmail">Email address</label><input id="signupEmail" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com">
+      <label for="signupPhone">Phone number</label><input id="signupPhone" type="tel" required maxlength="20" autocomplete="tel" placeholder="Phone number">
+      <label for="signupPassword">Create password</label><input id="signupPassword" type="password" required minlength="8" maxlength="100" autocomplete="new-password" placeholder="At least 8 characters">
+      <button class="btn primary full" type="submit">Create account →</button>
+      <p id="signupMessage" class="form-message" role="status"></p>
+    </form>
+    <div class="demo-note"><b>Demo login</b><span>Administrator: <strong>admin</strong> / <strong>admin123</strong></span><small>Prototype only. Do not use real or reused passwords.</small></div>
+  </div>
+  <p class="auth-footer">A better way to manage your reading journey.</p>
+</section>
+
+<div id="adminApp" hidden>
+  <aside class="sidebar">
+    <a href="#" class="brand" id="brandHome"><span class="brand-icon small-icon">L</span><span>LibraDesk<small>LIBRARY SYSTEM</small></span></a>
+    <p class="side-heading">WORKSPACE</p>
+    <nav class="side-nav">
+      <button class="nav-btn active" data-page="dashboard"><span>▦</span>Dashboard</button>
+      <button class="nav-btn" data-page="books"><span>▤</span>Book inventory</button>
+      <button class="nav-btn" data-page="members"><span>♙</span>Members</button>
+      <button class="nav-btn" data-page="transactions"><span>⇄</span>Issue &amp; return</button>
+      <button class="nav-btn" data-page="reports"><span>▥</span>Reports &amp; backup</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="admin-profile"><div class="avatar">A</div><div><b>Administrator</b><small>Library manager</small></div></div>
+      <button id="adminLogout" class="logout-btn">↪ Sign out</button>
+    </div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar"><div><p class="eyebrow">LIBRARY MANAGEMENT</p><h1 id="pageTitle">Dashboard</h1></div><div class="topbar-right"><span class="live-dot"></span><span>Local demo system</span><div class="avatar">A</div></div></header>
+    <div id="notice" class="notice" role="status" hidden></div>
+
+    <section id="dashboard" class="page">
+      <div class="welcome-banner"><div><span class="eyebrow light">YOUR LIBRARY AT A GLANCE</span><h2>Everything in one place.</h2><p>Manage books, members, borrowing activity and reports.</p></div><div class="banner-symbol">▤</div></div>
+      <div class="stats-grid">
+        <article class="stat-card"><div class="stat-top">Book entries <span class="stat-icon blue-bg">▤</span></div><h2 id="statTitles">0</h2><p>Different titles</p></article>
+        <article class="stat-card"><div class="stat-top">Total copies <span class="stat-icon purple-bg">▥</span></div><h2 id="statCopies">0</h2><p>Physical copies in inventory</p></article>
+        <article class="stat-card"><div class="stat-top">Members <span class="stat-icon green-bg">♙</span></div><h2 id="statMembers">0</h2><p>Registered members</p></article>
+        <article class="stat-card"><div class="stat-top">Currently issued <span class="stat-icon orange-bg">⇄</span></div><h2 id="statIssued">0</h2><p>Books not yet returned</p></article>
+      </div>
+      <div class="content-grid">
+        <div class="panel"><div class="panel-heading"><div><h2>Recent activity</h2><p>Latest book transactions</p></div><button class="btn secondary" data-go="transactions">View all</button></div><div class="table-wrap"><table><thead><tr><th>Book</th><th>Member</th><th>Due date</th><th>Status</th></tr></thead><tbody id="recentTransactions"></tbody></table></div></div>
+        <div class="panel"><h2>Quick actions</h2><p>Choose what you want to do next.</p><button class="quick-action" data-go="books"><span class="quick-icon blue-bg">＋</span><span><b>Add a book</b><small>Expand your collection</small></span><span class="arrow">→</span></button><button class="quick-action" data-go="members"><span class="quick-icon green-bg">♙</span><span><b>Manage members</b><small>View registered members</small></span><span class="arrow">→</span></button><button class="quick-action" data-go="transactions"><span class="quick-icon purple-bg">⇄</span><span><b>Issue a book</b><small>Start a new transaction</small></span><span class="arrow">→</span></button><button class="quick-action" data-go="reports"><span class="quick-icon orange-bg">⇩</span><span><b>Export reports</b><small>Download data or backup</small></span><span class="arrow">→</span></button></div>
+      </div>
+    </section>
+
+    <section id="books" class="page" hidden>
+      <div class="section-intro"><h2>Book inventory</h2><p>Add, edit, search and manage library books.</p></div>
+      <div class="panel"><h2 id="bookFormHeading">Add a new book</h2><form id="bookForm" class="form-grid">
+        <div class="field"><label for="bookTitle">Book title *</label><input id="bookTitle" required maxlength="150" placeholder="e.g. Wings of Fire"></div>
+        <div class="field"><label for="bookAuthor">Author *</label><input id="bookAuthor" required maxlength="100" placeholder="Author name"></div>
+        <div class="field"><label for="bookCategory">Category *</label><input id="bookCategory" required maxlength="80" placeholder="e.g. Biography"></div>
+        <div class="field"><label for="bookCopies">Total copies *</label><input id="bookCopies" type="number" min="1" max="10000" step="1" required placeholder="e.g. 3"></div>
+        <div class="field"><label for="bookIsbn">ISBN</label><input id="bookIsbn" maxlength="20" placeholder="ISBN (optional)"></div>
+        <div class="field"><label for="bookPublisher">Publisher</label><input id="bookPublisher" maxlength="120" placeholder="Publisher name"></div>
+        <div class="field"><label for="bookYear">Publication year</label><input id="bookYear" type="number" min="1000" max="2100" placeholder="e.g. 2025"></div>
+        <div class="field"><label for="bookShelf">Shelf location</label><input id="bookShelf" maxlength="50" placeholder="e.g. CS-A3"></div>
+        <div class="form-actions"><button class="btn primary" id="saveBookBtn" type="submit">＋ Add book</button><button class="btn secondary" id="cancelBookEdit" type="button" hidden>Cancel</button></div>
+      </form></div>
+      <div class="panel"><div class="panel-heading responsive-heading"><div><h2>All books</h2><p id="bookSummary">0 book entries</p></div><input id="bookSearch" class="search-input" placeholder="Search title, author, ISBN..." aria-label="Search books"></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Book</th><th>Author</th><th>Category</th><th>ISBN</th><th>Shelf</th><th>Total</th><th>Available</th><th>Actions</th></tr></thead><tbody id="bookList"></tbody></table></div></div>
+    </section>
+
+    <section id="members" class="page" hidden>
+      <div class="section-intro"><h2>Member management</h2><p>Register and manage library members.</p></div>
+      <div class="panel"><h2 id="memberFormHeading">Register a member</h2><form id="memberForm" class="form-grid">
+        <div class="field"><label for="memberName">Full name *</label><input id="memberName" required maxlength="100" placeholder="Full name"></div>
+        <div class="field"><label for="memberEmail">Email *</label><input id="memberEmail" type="email" required maxlength="254" placeholder="Email address"></div>
+        <div class="field"><label for="memberPhone">Phone *</label><input id="memberPhone" type="tel" required maxlength="20" placeholder="Phone number"></div>
+        <div class="form-actions"><button class="btn primary" id="saveMemberBtn" type="submit">＋ Register member</button><button class="btn secondary" id="cancelMemberEdit" type="button" hidden>Cancel</button></div>
+      </form><p class="help-text">Members can activate an account using Create account on the sign-in page.</p></div>
+      <div class="panel"><div class="panel-heading responsive-heading"><div><h2>Registered members</h2><p id="memberSummary">0 members</p></div><input id="memberSearch" class="search-input" placeholder="Search members..." aria-label="Search members"></div><div class="table-wrap"><table><thead><tr><th>Member ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Actions</th></tr></thead><tbody id="memberList"></tbody></table></div></div>
+    </section>
+
+    <section id="transactions" class="page" hidden>
+      <div class="section-intro"><h2>Issue &amp; return</h2><p>Track loans, due dates and late fines.</p></div>
+      <div class="panel"><h2>Issue a book</h2><form id="issueForm" class="form-grid"><div class="field"><label for="issueBook">Available book</label><select id="issueBook" required><option value="">Select a book</option></select></div><div class="field"><label for="issueMember">Member</label><select id="issueMember" required><option value="">Select a member</option></select></div><div class="form-actions"><button class="btn primary" type="submit">⇄ Issue book</button></div></form><p class="help-text">Standard loan period: 14 days. Late fee: ₹5 per overdue day. A member can borrow up to 3 books at once.</p></div>
+      <div class="panel"><div class="panel-heading responsive-heading"><div><h2>Transaction history</h2><p>All current and completed loans</p></div><input id="transactionSearch" class="search-input" placeholder="Search transactions..." aria-label="Search transactions"></div><div class="table-wrap"><table><thead><tr><th>Transaction</th><th>Book</th><th>Member</th><th>Issued</th><th>Due</th><th>Returned</th><th>Fine</th><th>Status / action</th></tr></thead><tbody id="transactionList"></tbody></table></div></div>
+    </section>
+
+    <section id="reports" class="page" hidden>
+      <div class="section-intro"><h2>Reports &amp; backup</h2><p>Export records and create a backup before restoring data.</p></div>
+      <div class="stats-grid report-stats"><article class="stat-card"><div class="stat-top">Book entries</div><h2 id="reportBookCount">0</h2><p>Titles stored</p></article><article class="stat-card"><div class="stat-top">Members</div><h2 id="reportMemberCount">0</h2><p>Registered accounts</p></article><article class="stat-card"><div class="stat-top">Transactions</div><h2 id="reportTransactionCount">0</h2><p>Loan records</p></article><article class="stat-card"><div class="stat-top">Audit events</div><h2 id="reportAuditCount">0</h2><p>Recent admin actions</p></article></div>
+      <div class="panel"><h2>Export reports</h2><p>Download CSV files that can be opened in Excel or Google Sheets.</p><div class="form-actions report-actions"><button class="btn primary" id="exportBooksBtn" type="button">Export books CSV</button><button class="btn primary" id="exportMembersBtn" type="button">Export members CSV</button><button class="btn primary" id="exportTransactionsBtn" type="button">Export transactions CSV</button></div></div>
+      <div class="panel"><h2>Backup and restore</h2><p>JSON backup includes books, members, transactions, ID counters and audit events. Keep backups in a safe place.</p><div class="form-actions report-actions"><button class="btn primary" id="backupBtn" type="button">Download JSON backup</button><button class="btn secondary" id="restoreBtn" type="button">Restore from backup</button><input id="backupFile" type="file" accept=".json,application/json" hidden></div><p class="help-text">Restoring replaces the current data in this browser. Download a fresh backup first. Never restore a file you do not trust.</p></div>
+      <div class="panel"><div class="panel-heading"><div><h2>Recent audit activity</h2><p>Latest recorded data changes in this browser</p></div></div><div class="table-wrap"><table><thead><tr><th>Date and time</th><th>Action</th><th>Details</th></tr></thead><tbody id="auditList"></tbody></table></div><p class="help-text">Audit history is local to this browser and is not tamper-proof security logging.</p></div>
+    </section>
+    <footer>LibraDesk <span>·</span> Library Management System</footer>
+  </main>
+</div>
+
+<div id="memberPortal" class="member-portal" hidden>
+  <header class="member-header"><a href="#" class="brand" id="memberBrand"><span class="brand-icon small-icon">L</span><span>LibraDesk<small>MEMBER PORTAL</small></span></a><div class="topbar-right"><span id="memberHeaderName">Member</span><button class="btn secondary" id="memberLogout">Sign out</button></div></header>
+  <main class="member-main">
+    <div class="welcome-banner member-banner"><div><span class="eyebrow light">MEMBER SPACE</span><h2 id="memberWelcome">Welcome!</h2><p>Explore available books and track your loans.</p></div><div class="banner-symbol">▤</div></div>
+    <div class="member-stats"><article class="stat-card"><span>My active loans</span><h2 id="myActiveCount">0</h2></article><article class="stat-card"><span>My overdue books</span><h2 id="myOverdueCount">0</h2></article></div>
+    <div class="panel"><div class="panel-heading responsive-heading"><div><h2>Explore books</h2><p>Books currently available in the library</p></div><input id="publicBookSearch" class="search-input" placeholder="Search available books..." aria-label="Search available books"></div><div class="table-wrap"><table><thead><tr><th>Title</th><th>Author</th><th>Category</th><th>Available copies</th></tr></thead><tbody id="publicBookList"></tbody></table></div></div>
+    <div class="panel"><div class="panel-heading"><div><h2>My borrowing history</h2><p>Track due dates and fines</p></div></div><div class="table-wrap"><table><thead><tr><th>Book</th><th>Issued</th><th>Due date</th><th>Returned</th><th>Fine</th><th>Status</th></tr></thead><tbody id="myLoans"></tbody></table></div></div>
+  </main><footer>LibraDesk <span>·</span> Your library, your journey.</footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
